@@ -37,7 +37,7 @@ public class Gasto {
 	private CategoriaEnum categoria;
 	
 	@Column(name = "DT_GASTO")
-	private LocalDate gasto;
+	private LocalDate data;
 	
 	@Column(name = "VLR_GASTO")
 	private Double valor;
