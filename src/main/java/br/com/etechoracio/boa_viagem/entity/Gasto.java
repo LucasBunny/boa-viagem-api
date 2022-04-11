@@ -3,6 +3,7 @@ package br.com.etechoracio.boa_viagem.entity;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "TBL_GASTO")
 public class Gasto {
 	
