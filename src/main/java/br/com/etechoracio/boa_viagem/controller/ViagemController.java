@@ -14,25 +14,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.etechoracio.boa_viagem.entity.Gasto;
-import br.com.etechoracio.boa_viagem.repository.GastoRepository;
+import br.com.etechoracio.boa_viagem.entity.Viagem;
+import br.com.etechoracio.boa_viagem.entity.Viagem;
+import br.com.etechoracio.boa_viagem.repository.ViagemRepository;
+import br.com.etechoracio.boa_viagem.repository.ViagemRepository;
 
 @RestController
-@RequestMapping("/gastos")
-public class GastoController {
+@RequestMapping("/viagens")
+public class ViagemController {
 
 	@Autowired
-	private GastoRepository repository;
+	private ViagemRepository repository;
 
 	@GetMapping
-	public List<Gasto> listarTodos() {
+	public List<Viagem> listarTodos() {
 		return repository.findAll();
 	}
 
 	// READ
 	@GetMapping("/{id}")
-	public ResponseEntity<Gasto> buscarPorId(@PathVariable Long id) {
-		Optional<Gasto> existe = repository.findById(id);
+	public ResponseEntity<Viagem> buscarPorId(@PathVariable Long id) {
+		Optional<Viagem> existe = repository.findById(id);
 		if (existe.isPresent()) {
 			return ResponseEntity.ok(existe.get());
 		}
@@ -54,21 +56,21 @@ public class GastoController {
 
 	// CREATE
 	@PostMapping
-	public ResponseEntity<Gasto> inserir(@RequestBody Gasto obj) {
+	public ResponseEntity<Viagem> inserir(@RequestBody Viagem obj) {
 		repository.save(obj);
 		return ResponseEntity.ok(obj);
 	}
 
 	// UPDATE
 	@PutMapping("/{id}")
-	public ResponseEntity<Gasto> atualizar(@PathVariable Long id, @RequestBody Gasto gasto) {
+	public ResponseEntity<Viagem> atualizar(@PathVariable Long id, @RequestBody Viagem viagem) {
 		boolean existe = repository.existsById(id);
 
 		if (!existe) {
 			return ResponseEntity.notFound().build();
 		}
 
-		repository.save(gasto);
-		return ResponseEntity.ok(gasto);
+		repository.save(viagem);
+		return ResponseEntity.ok(viagem);
 	}
 }
