@@ -19,21 +19,19 @@ public class ViagemService {
 	}
 
 	// Buscar
-	public Viagem buscarPorId(Long id) {
-		Optional<Viagem> existe = repository.findById(id);
-		if (existe.isPresent()) {
-			return existe.get();
-		}
-		return null;
+	public Optional<Viagem> buscarPorId(Long id) {
+		return	repository.findById(id);
+	
 	}
 
 	// Deletar
-	public void deletarPorId(Long id) {
+	public boolean deletarPorId(Long id) {
 		boolean existe = repository.existsById(id);
 
 		if (existe) {
 			repository.deleteById(id);
 		}
+		return existe;
 	}
 
 	// Inserir
@@ -42,13 +40,13 @@ public class ViagemService {
 	}
 
 	// Atualizar Update
-	public Viagem atualizar(Long id, Viagem Viagem) {
+	public Optional<Viagem> atualizar(Long id, Viagem Viagem) {
 		boolean existe = repository.existsById(id);
 
 		if (!existe) {
-			return null;
+			return Optional.empty();
 		}
 
-		return repository.save(Viagem);
+		return Optional.of(repository.save(Viagem));
 	}
 }
