@@ -3,8 +3,6 @@ package br.com.etechoracio.boa_viagem.service;
 import java.util.List;
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +47,10 @@ public class GastoService {
 			throw new RuntimeException("Viagem não encontrada!");
 		}
 		if (existe.get().getSaida() != null) {
-			throw new RuntimeException("Viagem ainda em aberto");
+			throw new RuntimeException("Viagem ainda em aberto!");
+		}
+		if (obj.getData().isBefore(existe.get().getChegada())) {
+			throw new RuntimeException("Gasto anterior à data de chegada!");
 		}
 		return repository.save(obj);
 
@@ -57,12 +58,18 @@ public class GastoService {
 
 	// Atualizar Update
 	public Optional<Gasto> atualizar(Long id, Gasto gasto) {
-		boolean existe = repository.existsById(id);
+		Optional<Gasto> existe = repository.findById(id);
+		Viagem viagem = existe.get().getViagem();
 
-		if (!existe) {
+		if (!existe.isPresent()) {
 			return Optional.empty();
 		}
-
+		if (viagem.getId() != gasto.getViagem().getId()) {
+			throw new RuntimeException("Viagem não é a mesma da inserção!");
+		}
+		if (gasto.getData().isBefore(viagem.getChegada())) {
+			throw new RuntimeException("Gasto anterior à data de chegada!");
+		}
 		return Optional.of(repository.save(gasto));
 	}
 }
