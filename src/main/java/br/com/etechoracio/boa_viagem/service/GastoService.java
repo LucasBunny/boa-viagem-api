@@ -18,7 +18,7 @@ public class GastoService {
 	private GastoRepository repository;
 
 	@Autowired
-	private ViagemRepository ViagemRepository;
+	private ViagemRepository viagemRepository;
 
 	// Listar Todos
 	public List<Gasto> listarTodos() {
@@ -42,7 +42,7 @@ public class GastoService {
 
 	// Inserir
 	public Gasto inserir(Gasto obj) {
-		Optional<Viagem> existe = ViagemRepository.findById(obj.getViagem().getId());
+		Optional<Viagem> existe = viagemRepository.findById(obj.getViagem().getId());
 		if (!existe.isPresent()) {
 			throw new RuntimeException("Viagem não encontrada!");
 		}

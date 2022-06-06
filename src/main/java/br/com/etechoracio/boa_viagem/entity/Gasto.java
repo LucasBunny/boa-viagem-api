@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.*;
+
+import org.hibernate.validator.constraints.Length;
 
 import br.com.etechoracio.boa_viagem.enums.CategoriaEnum;
 import lombok.Getter;
@@ -31,6 +34,8 @@ public class Gasto {
 	@Column(name = "TX_DESCRICAO")
 	private String descricao;
 	
+	@NotBlank(message = "Campo 'LOCAL' obrigatório!")
+	@Length(max = 30)
 	@Column(name = "TX_LOCAL")
 	private String local;
 	
@@ -38,12 +43,16 @@ public class Gasto {
 	@Column(name = "TP_CATEGORIA")
 	private CategoriaEnum categoria;
 	
+	@NotNull
+	@FutureOrPresent
 	@Column(name = "DT_GASTO")
 	private LocalDate data;
 	
+	@DecimalMin(value = "0.01")
 	@Column(name = "VLR_GASTO")
 	private Double valor;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "ID_VIAGEM")
 	private Viagem viagem;
